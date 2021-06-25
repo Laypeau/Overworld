@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerHealth : Attackable
 {
-	public AttackData attackData;	//////////////////////////////////////////////set in inspector for now
 	private PlayerController player;
 	
 	protected override void Awake()

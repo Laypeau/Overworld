@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
 	int animSpinHash = Animator.StringToHash("isSpin");
 
 	[SerializeField] private Transform cameraFocusTransform; //set in inspector because lazy
-	private BoundedCamera cameraScript;
 
 	#region Movement 
 		CharacterController characterController;
