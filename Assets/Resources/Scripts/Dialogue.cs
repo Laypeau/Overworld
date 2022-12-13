@@ -34,20 +34,19 @@ public class Dialogue : Interactable
 	{
 		dialogueBox.text = dialogueData.textBoxes[0];
 		dialogueBox.maxVisibleCharacters = 0;
-		player.SetUIMode(true);
+		player.SetUIControlMode(true);
 		canvasController.SetPanelVisible(true);
-
 														
 		yield return EnumerateThroughCharacters();
 
 		canvasController.SetPanelVisible(false);
-		player.SetUIMode(false);
+		player.SetUIControlMode(false);
 		yield break;
 	}
 
-	protected IEnumerator EnumerateThroughCharacters() //allow escaping the entire thing
+	protected IEnumerator EnumerateThroughCharacters()
 	{
-		for (int i = 0; i < dialogueData.textBoxes.Count; i++)
+		for (int i = 0; i < dialogueData.textBoxes.Count; i++) //for each text box
 		{
 			dialogueBox.maxVisibleCharacters = 0;
 			dialogueBox.text = dialogueData.textBoxes[i];
@@ -55,13 +54,14 @@ public class Dialogue : Interactable
 			for (int j = 0; j < dialogueData.textBoxes[i].Length + countIncrement; j += countIncrement) //for each letter
 			{
 				//if pressed and released again, skip to end of the text box. Maybe add a thing to speed up delayTime as well. read up in input action button action type
-				if (player.inputActionAsset.UI.Accept.phase == InputActionPhase.Started)
+				if (player.inputActionAsset.UI.Accept.triggered)
 				{
-					dialogueBox.maxVisibleCharacters = dialogueData.textBoxes[i].Length;
-					while (player.inputActionAsset.UI.Accept.phase == InputActionPhase.Started)
+					while (player.inputActionAsset.UI.Accept.triggered)
 					{
 						yield return new WaitForEndOfFrame();
 					}
+					dialogueBox.maxVisibleCharacters = dialogueData.textBoxes[i].Length;
+					
 					break;
 				}
 
@@ -69,8 +69,11 @@ public class Dialogue : Interactable
 				yield return new WaitForSeconds(delayTime);
 			}
 
-			yield return StartCoroutine(WaitForInput());
-			while (player.inputActionAsset.UI.Accept.phase == InputActionPhase.Started) //////////////////////////////////////////////////////move to WaitForINput()
+			while (!player.inputActionAsset.UI.Accept.triggered)
+			{
+				yield return new WaitForEndOfFrame();
+			}
+			while (player.inputActionAsset.UI.Accept.triggered)
 			{
 				yield return new WaitForEndOfFrame();
 			}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a171f5f3d1f9db4392282d9c7dc7570, type: 3}
+  m_Name: Test Dialogue 1
+  m_EditorClassIdentifier: 
+  name: Test
+  textBoxes:
+  - This is a test
+  - test text
+  - test text test text test text test text test text test text test text test text
+    test text test text test text test text test text test text test text test text
+    test text test text test text test text test text test text tesTUYHGDISADIUSADNHasdjhajshd
+    sa  HJSADHASYIUDYNYIUY uYIUNYIUSYAID say indIPSAIDYTWQRDYINDSUALMD SAD*#@(EY(&DP(*#98
+  - "test text\n\ntest text \n\ntest text \n\ntest text "
+  - 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+  - This concludes the test text.

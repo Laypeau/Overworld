@@ -5,25 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerHealth : Attackable
 {
-	private PlayerController player;
-	
-	protected override void Awake()
+	PlayerController playerController;
+
+	void Start()
 	{
-		base.Awake();
-		player = gameObject.GetComponent<PlayerController>();
+		playerController = gameObject.GetComponent<PlayerController>();
 	}
 
 	public override void DealDamage()
 	{
-		foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(1f, 1f, 1f), transform.rotation, ~entitiesMask)) //dont hurt self
+		// ParticleSystem.ShapeModule asd = gameObject.GetComponent<ParticleSystem>().shape;
+		// asd.position = new Vector3(playerController.facing.x, 1f, playerController.facing.y);
+		gameObject.GetComponent<ParticleSystem>().Play();
+
+		foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(1f, 1f, 1f), transform.rotation, entitiesMask))
 		{
 			Attackable attackable = collider.GetComponent<Attackable>();
 			if (attackable != null) attackable.TakeDamage(1f);
 		}
 	}
-
-	protected override void Die()
-	{
-		Debug.Log("player is dead");
-	}
 }
+ 

@@ -35,14 +35,6 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""77c1205a-9d9d-44b4-bede-36d3329000ce"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""7fb75409-5e81-4331-bbf0-e03c6f15bfde"",
@@ -55,6 +47,14 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""6c277331-e616-4274-9a54-f89eff8b4479"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Camera"",
+                    ""type"": ""Value"",
+                    ""id"": ""66b0220e-d4d6-4433-9d22-5305ccb1277c"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -151,33 +151,11 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1a345c90-5bfe-41f9-9ba1-bb4a51c4a44c"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8646352f-78f9-4014-8d74-1cf99456333e"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d4ba2be4-4a26-4bd1-816c-a4bc8b83d641"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -195,7 +173,7 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""93b0a13f-a8f2-422c-ad85-4b49b6baaf1b"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -206,13 +184,79 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6f9298b7-0ab7-4577-a02a-c0c097a3fdb3"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc867523-516d-43b1-907e-4028cad1150f"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""7bc6723b-96d8-48cd-a9d4-8f1382877772"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Camera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1bf24de2-d8bb-4a51-b81d-f5fea33ca55a"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b6bd3208-82c0-4738-956f-1b79a29b8b0f"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""9194111b-e7a6-4959-b835-7f955207ce40"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""31d2f681-4b39-480b-93ef-8822869cdec8"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -470,9 +514,9 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_Interact = m_Movement.FindAction("Interact", throwIfNotFound: true);
-        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Attack = m_Movement.FindAction("Attack", throwIfNotFound: true);
         m_Movement_Dodge = m_Movement.FindAction("Dodge", throwIfNotFound: true);
+        m_Movement_Camera = m_Movement.FindAction("Camera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Accept = m_UI.FindAction("Accept", throwIfNotFound: true);
@@ -529,18 +573,18 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
     private IMovementActions m_MovementActionsCallbackInterface;
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_Interact;
-    private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Attack;
     private readonly InputAction m_Movement_Dodge;
+    private readonly InputAction m_Movement_Camera;
     public struct MovementActions
     {
         private @PlayerInputActionAsset m_Wrapper;
         public MovementActions(@PlayerInputActionAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @Interact => m_Wrapper.m_Movement_Interact;
-        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Attack => m_Wrapper.m_Movement_Attack;
         public InputAction @Dodge => m_Wrapper.m_Movement_Dodge;
+        public InputAction @Camera => m_Wrapper.m_Movement_Camera;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -556,15 +600,15 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
-                @Jump.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnJump;
                 @Attack.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnAttack;
                 @Dodge.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnDodge;
+                @Camera.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
+                @Camera.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
+                @Camera.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnCamera;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -575,15 +619,15 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @Camera.started += instance.OnCamera;
+                @Camera.performed += instance.OnCamera;
+                @Camera.canceled += instance.OnCamera;
             }
         }
     }
@@ -659,9 +703,9 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnCamera(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

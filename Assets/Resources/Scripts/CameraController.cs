@@ -5,99 +5,80 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-	private float headOffset = 0.75f;
-
-	private float cameraFocusPosLerpXZ = 1f;
-	private float cameraFocusPosLerpY = 0.75f;
+	public Transform focus;
+	public Vector3 offset = Vector3.zero;
+	[Range(0f, 1f)] [SerializeField] private float lerpAmount = 0.9f;
+	private Transform cameraTransform;
+	private Vector3 initialOffset;
 
 	[Range(-10f, 10f)] public float sensitivityX = 5f;
 	[Range(-10f, 10f)] public float sensitivityY = -5f;
-
 	//It's inverted from what you'd think for some reason. ¯\_(ツ)_/¯
-	public float rotationX = 0f;
-	public float rotationY = 0f;
+	public float rotX = 0f;
+	public float rotY = 0f;
 
 	//Camera shake
-	[Range(0f, 10f)] public float trauma = 0f;
-	[HideInInspector] public float traumaDelta = 0f;
-	private readonly float traumaDecrement = 0.15f;
-	private float shakeSpeed = 10f;
+	[Range(0f, 1f)] [SerializeField] private float trauma = 0f;
+	[SerializeField] private float shakeSpeed = 15f;
+	[SerializeField] private float traumaDecrement = 0.2f;
 
-	//Component references
-	private GameObject player;
-	private Transform cameraFocusTransform;
-	private Transform cameraTransform;
+	private PlayerInputActionAsset inputActionAsset;
+	private Vector2 cameraInput = Vector2.zero;
 
 	void Start()
 	{
-		Initialise();
-	}
+		inputActionAsset = focus.GetComponent<PlayerController>().inputActionAsset;
+		inputActionAsset.Movement.Camera.performed += context =>
+		{
+			cameraInput = context.ReadValue<Vector2>();
+		};
+		inputActionAsset.Movement.Camera.canceled += context =>
+		{
+			cameraInput = Vector2.zero;
+		};
 
-	void Update()
-	{
-		//AngleZoom();
-		//CameraBackToCollider(CameraTransform);
+		try
+		{
+			cameraTransform = transform.GetChild(0);
+			initialOffset = cameraTransform.localPosition;
+			cameraTransform.GetComponent<Camera>();
+		}
+		catch
+		{
+			throw new System.Exception("Camera Controller does not have camera as child 0");
+		}
 	}
 
 	void LateUpdate()
 	{
-		DoCameraShake();    //Put in lateupdate so any other script wanting to change the trauma value can do it in Update and have the camera rotate the same frame
+		transform.position = Vector3.Lerp(transform.position, focus.position, lerpAmount);
+
+		//rotX += Input.GetAxis("Mouse Y") * sensitivityY;  //Up is negative, Down is positive. ¯\_(ツ)_/¯
+		//rotX = Mathf.Clamp(rotX, -90f, 90f);
+
+		//rotY = rotY % 360f + (cameraInput.x * sensitivityX);
+		transform.eulerAngles = transform.eulerAngles + new Vector3(0f, cameraInput.x * sensitivityX, 0f);
+
+		//transform.rotation = Quaternion.Euler(rotX, rotY, 0f);
+
+		DoCameraShake();
 	}
 
-	public void Initialise()
+	/// <summary> Trauma ranges from 0-1 </summary>
+	public void AddShakeTrauma(float amount)
 	{
-		player = GameObject.Find("Player");
-		cameraFocusTransform = GetComponent<Transform>();
-		cameraTransform = cameraFocusTransform.Find("Main Camera");
+		trauma = Mathf.Min(1f, trauma + amount);
 	}
 
-	public void MoveToFocus(Transform _HeadPosition)
+	private void DoCameraShake()
 	{
-		float _OutX = Mathf.Lerp(cameraFocusTransform.position.x, _HeadPosition.position.x, cameraFocusPosLerpXZ);
-		float _OutY = Mathf.Lerp(cameraFocusTransform.position.y, _HeadPosition.position.y, cameraFocusPosLerpY);
-		float _OutZ = Mathf.Lerp(cameraFocusTransform.position.z, _HeadPosition.position.z, cameraFocusPosLerpXZ);
-
-		cameraFocusTransform.position = new Vector3(_OutX, _OutY, _OutZ);
-	}
-
-	public void RotateByMouse(Transform _FocusTransform)
-	{
-		//rotationX += Input.GetAxis("Mouse Y") * sensitivityY;  //Up is negative, Down is positive. ¯\_(ツ)_/¯
-		//rotationX = Mathf.Clamp(rotationX, -90f, 90f);
-
-		rotationY = rotationY % 360f + Input.GetAxis("Mouse X") * sensitivityX;
-
-		_FocusTransform.rotation = Quaternion.Euler(rotationX, rotationY, 0f);
-	}
-
-	public void AddShakeTrauma(float _TraumaAmount)
-	{
-		trauma += _TraumaAmount;
-	}
-
-	/// <summary>
-	/// Adds TraumaDelta to Trauma, clamped between 0 & 10 
-	/// Shakes the camera exponentially proportional to Trauma, within the bounds of +-ShakeMaxZ. 
-	/// Then it decrements Trauma by TraumaDecrement * Timescale.
-	/// </summary>
-	public void DoCameraShake()
-	{
-		trauma = Mathf.Clamp(trauma + traumaDelta, 0f, 10f);  //Probably remap it from 0-100
-		traumaDelta = 0;
-
 		//ranges from -0.5 to 0.5
-		float _ShakeX = (Mathf.Pow(trauma, 2f) / 100) * (Mathf.PerlinNoise(69f, Time.time * shakeSpeed) - 0.5f);
-		float _ShakeY = (Mathf.Pow(trauma, 2f) / 100) * (Mathf.PerlinNoise(420f, Time.time * shakeSpeed) - 0.5f);
+		float shakeX = Mathf.Pow(trauma, 2f) * (Mathf.PerlinNoise(69f, Time.time * shakeSpeed) - 0.5f);
+		float shakeY = Mathf.Pow(trauma, 2f) * (Mathf.PerlinNoise(420f, Time.time * shakeSpeed) - 0.5f);
+		float shakeZ = Mathf.Pow(trauma, 2f) * (Mathf.PerlinNoise(123f, Time.time * shakeSpeed) - 0.5f);
 
-		cameraTransform.localPosition = new Vector3(_ShakeX, _ShakeY, 0f);
+		cameraTransform.localPosition = new Vector3(shakeX, shakeY, shakeZ) + initialOffset;
 
-		if (trauma - traumaDecrement * Time.timeScale <= 0)
-		{
-			trauma = 0;
-		}
-		else
-		{
-			trauma -= traumaDecrement * Time.timeScale;
-		}
+		trauma = Mathf.Max(0f, trauma - (traumaDecrement * Time.timeScale * Time.deltaTime));
 	}
 }
